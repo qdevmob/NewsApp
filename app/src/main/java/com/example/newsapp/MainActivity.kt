@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.example.newsapp.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,13 +18,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.fragment_splash)
+       CoroutineScope(Dispatchers.Main).launch {
+           delay(5000)
+           binding = ActivityMainBinding.inflate(layoutInflater)
+           setContentView(binding?.root)
+//           bottom_nav_menu.setupWithNavController(
+//               navController = nav_host_fragment.findNavController()
 
-        Handler(Looper.myLooper()!!).postDelayed({
-            setContentView(nBinding.root)
-        }, 3000)
-
+       }
     }
 
     override fun onDestroy() {
